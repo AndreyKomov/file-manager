@@ -12,13 +12,12 @@ export class OsService {
 
     switch (arg) {
       case '--EOL':
-        this.loggerService.log(JSON.stringify(EOL).replaceAll('"', ''))
+        this.loggerService.log(JSON.stringify(EOL).replaceAll('"', ''));
         break;
 
       case '--cpus':
         const coreCPUS = cpus();
         const data = coreCPUS.map(it => it.model);
-
         const cpusObj = {
           amount: coreCPUS.length,
           data: data
@@ -53,4 +52,4 @@ export class OsService {
   }
 }
 
-export default OsService
+export default OsService;

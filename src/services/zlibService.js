@@ -20,12 +20,11 @@ class ZlibService {
         this.loggerService.log(`Success: File ${pathToFile} compressed to ${pathToDestination}.`);
         this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
       });
-      readableStream.on('error', (err) => this.loggerService.log(err.message));
-      writeableStream.on('error', (err) => this.loggerService.log(err.message));
+      readableStream.on('error', (err) => this.loggerService.log(150, err.message));
+      writeableStream.on('error', (err) => this.loggerService.log(200, err.message));
       readableStream.pipe(brotliCompress).pipe(writeableStream);
     } catch (err) {
       this.loggerService.log(err.message);
-
     }
   }
 
