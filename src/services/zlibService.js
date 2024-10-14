@@ -4,12 +4,10 @@ import { createReadStream, createWriteStream } from 'fs';
 class ZlibService {
   loggerService;
   fileService;
-  currentDirectory;
 
   constructor(loggerService, fileService) {
     this.loggerService = loggerService;
-    this.fileService = fileService;
-    this.currentDirectory = this.fileService.getCurrentDirectory();
+    this.fileService = fileService;     
   }
 
   compress(pathToFile, pathToDestination) {
@@ -20,7 +18,7 @@ class ZlibService {
 
       writeableStream.on('finish', () => {
         this.loggerService.log(`Success: File ${pathToFile} compressed to ${pathToDestination}.`);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
       });
       readableStream.on('error', (err) => this.loggerService.log(err.message));
       writeableStream.on('error', (err) => this.loggerService.log(err.message));
@@ -39,7 +37,7 @@ class ZlibService {
 
       writeableStream.on('finish', () => {
         this.loggerService.log(`Success: File ${pathToFile} decompressed to ${pathToDestination}.`);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
       });
       readableStream.on('error', (err) => this.loggerService.log(err.message));
       writeableStream.on('error', (err) => this.loggerService.log(err.message));

@@ -25,7 +25,7 @@ class CryptoService {
                 process.stdout.write(EOL);
             })
 
-            readable.on('end', () => this.loggerService.logDirectory(this.fileService.getCurrentDirectory()));
+            readable.on('end', () => this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath()));
             readable.on('error', (err) => this.loggerService.log(err.message));
         } catch (err) {
             this.loggerService.log(`Something went wrong: ${err}.`);

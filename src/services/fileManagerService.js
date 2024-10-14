@@ -4,7 +4,6 @@ export class FileManagerService {
     osService;
     cryptoService;
     zlibService;
-    currentDirectory;
 
     constructor(filesService, loggerService, osService, cryptoService, zlibService) {
         this.fileService = filesService;
@@ -12,23 +11,22 @@ export class FileManagerService {
         this.osService = osService;
         this.cryptoService = cryptoService;
         this.zlibService = zlibService;
-        this.currentDirectory = this.fileService.getCurrentDirectory();
     }
 
     up() {
         this.fileService.goUpFromCurrentDirectory();
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 
     async cd(path) {
         await this.fileService.changeDirectory(path);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 
     async ls() {
-        await this.fileService.getCurrentDirectoryFiles();
-        this.loggerService.logFiles(await this.fileService.getCurrentDirectoryFiles());
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        await this.fileService.getCurrentDirectoryPathFiles();
+        this.loggerService.logFiles(await this.fileService.getCurrentDirectoryPathFiles());
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 
     async cat(pathToFile) {
@@ -40,7 +38,7 @@ export class FileManagerService {
     }
 
     async rn(pathToFile, newFileName) {
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
 
         if (pathToFile && newFileName) {
             await this.fileService.renameFile(pathToFile, newFileName);
@@ -50,7 +48,7 @@ export class FileManagerService {
     }
 
     async cp(pathToFile, pathToNewDir) {
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
 
         if (pathToFile && pathToNewDir) {
             await this.fileService.copyFile(pathToFile, pathToNewDir);
@@ -60,7 +58,7 @@ export class FileManagerService {
     }
 
     async mv(pathToFile, pathToNewDir) {
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
 
         if (pathToFile && pathToNewDir) {
             await this.fileService.moveFile(pathToFile, pathToNewDir);
@@ -70,7 +68,7 @@ export class FileManagerService {
     }
 
     async rm(pathToFile) {
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
 
         if (pathToFile) {
             await this.fileService.deleteFile(pathToFile);
@@ -81,21 +79,24 @@ export class FileManagerService {
 
     async os(arg) {
         await this.osService.getOSInfo(arg);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+
+        const currentDirectory = this.fileService.getCurrentDirectoryPath();
+
+        this.loggerService.showCurrentDirectory(currentDirectory);
     }
 
     async hash(pathToFile) {
         await this.cryptoService.calculateHash(pathToFile);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 
     async compress(pathToFile, pathToDestination) {
         await this.zlibService.compress(pathToFile, pathToDestination);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 
     async decompress(pathToFile, pathToDestination) {
         await this.zlibService.decompress(pathToFile, pathToDestination);
-        this.loggerService.showCurrentDirectory(this.currentDirectory);
+        this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 }

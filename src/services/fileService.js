@@ -45,7 +45,7 @@ export class FileService {
         }
     }
 
-    async getCurrentDirectoryFiles() {
+    async getCurrentDirectoryPathFiles() {
         try {
             const files = await readdir(this.currentDirectoryPath);
             const preparedArr = files.map((file) => {
