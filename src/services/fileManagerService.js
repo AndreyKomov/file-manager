@@ -25,7 +25,7 @@ export class FileManagerService {
 
     async ls() {
         await this.fileService.getCurrentDirectoryPathFiles();
-        this.loggerService.logFiles(await this.fileService.getCurrentDirectoryPathFiles());
+        this.loggerService.showFiles(await this.fileService.getCurrentDirectoryPathFiles());
         this.loggerService.showCurrentDirectory(this.fileService.getCurrentDirectoryPath());
     }
 

@@ -1,6 +1,4 @@
 export const getUserName = () => {
-    console.log(process.argv);
-
     const userNamePrefix = '--username=';
     const userNameArg = process.argv.find((arg) => arg.includes(userNamePrefix));
     const usernamePrefixLength = userNamePrefix.split('').length;
